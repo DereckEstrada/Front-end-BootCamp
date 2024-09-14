@@ -1,0 +1,19 @@
+<p-dialog #DialogStock header="Ingrese la cantidad de productos" [(visible)]="visible">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="nombreCliente" class="font-semibold w-6rem">Producto</label>
+        <input pInputText id="nombreCliente" class="flex-auto" autocomplete="off" disabled="true" [(ngModel)]="producto.prodDescripcion" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Stock actual</label>
+        <input pInputText id="identificacionCliente" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Cantidad de ingreso</label>
+        <input pInputText id="identificacionCliente" type="number" class="flex-auto" autocomplete="off" />
+    </div>
+    <p-divider type="solid" />
+    <div class="flex justify-content-end flex-column sm:flex-row">
+        <button pButton label="Guardar" class="p-button m-2"></button>
+        <button pButton label="Cancelar" class="p-button-outlined m-2"></button>
+    </div>
+</p-dialog>

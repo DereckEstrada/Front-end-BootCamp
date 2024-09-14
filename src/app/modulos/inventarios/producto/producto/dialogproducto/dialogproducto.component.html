@@ -1,0 +1,41 @@
+<p-dialog #dialogoGenerico [header]="'Información del Producto'" [(visible)]="visibleClient" [modal]="true" showEffect="fade"
+    [style]="{ height: '80%'}">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="nombreCliente" class="font-semibold w-6rem">Nombre</label>
+        <input pInputText [(ngModel)]="nombre" id="nombreCliente" class="flex-auto" name="nombre" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente"  class="font-semibold w-6rem">Precio</label>
+        <input name="precio" [ngModel]="precio | currency" pInputText id="identificacionCliente" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Categor&iacute;a</label>
+        <p-inputGroup>
+            <input [(ngModel)]="categoria" [disabled]="true" pInputText placeholder="Seleccione su categoría" />
+            <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarCateogria()"></button>
+        </p-inputGroup>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Empresa</label>
+        <p-inputGroup>
+            <input [(ngModel)]="empresa" [disabled]="true" pInputText placeholder="Seleccione su empresa" />
+            <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarEmpresa()"></button>
+        </p-inputGroup>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Proveedor</label>
+        <input pInputText id="identificacionCliente" [(ngModel)]="proveedor" class="flex-auto" autocomplete="off" name="Proveedor"/>
+    </div>
+
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="identificacionCliente" class="font-semibold w-6rem">Estatus</label>
+        <p-dropdown [options]="statuses" name="estatus" [(ngModel)]="estatus" optionLabel="label"></p-dropdown>
+    </div>
+    <p-divider type="solid" />
+    <div class="flex justify-content-end flex-column sm:flex-row">
+        <button pButton label="Guardar" class="p-button m-2" (click)="guardar()"></button>
+        <button pButton label="Cancelar" class="p-button-outlined m-2"></button>
+    </div>
+</p-dialog>
+<app-findcategoria (seleccionarCategoria)="fijarCategoria()"></app-findcategoria>
+<app-findempresa (selecionarEmpresa)="fijarEmpresa()"></app-findempresa>
