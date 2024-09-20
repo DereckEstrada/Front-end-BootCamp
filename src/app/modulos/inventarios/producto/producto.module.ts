@@ -16,6 +16,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { FindcategoriaModule } from "../../../shared/findcategoria/findcategoria.module";
 import { FindempresaModule } from 'src/app/shared/findempresa/findempresa.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ToastModule,
     InputGroupModule,
-    SharedModule
+    SharedModule,
+    InputNumberModule
 ]
 })
 export class ProductoModule { }

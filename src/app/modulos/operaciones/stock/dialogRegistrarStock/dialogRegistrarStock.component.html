@@ -1,0 +1,69 @@
+<p-dialog #dialogoGenerico [header]="'Información del Stock'" [(visible)]="visible" [modal]="true" showEffect="fade"
+    [style]="{ height: '70%'}">
+    <form #form="ngForm"[style]="{ marginTop: '25px'}" >
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="productoId" class="font-semibold w-6rem">Producto</label>
+            <div>
+                <p-inputGroup>
+                    <input id="productoId"  readonly="true" name="producto" [(ngModel)]="stock.prodDescripcion"
+                     pInputText placeholder="Seleccione su producto" (click)="mostrarProducto()" required
+                     #producto="ngModel" [ngClass]="{'ng-invalid ng-dirty':producto.invalid && producto.touched}" />
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarProducto()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="cantidadId" class="font-semibold w-6rem">Cantidad Stock</label>
+            <div>
+                <p-inputNumber 
+                [(ngModel)]="stock.cantidadStock"
+                id="cantidadId" required
+                name="cantidad" placeholder="Ingrese el stock"
+                #cantidad="ngModel" [ngClass]="{'ng-invalid ng-dirty':cantidad.invalid && cantidad.touched}" />               
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="empresaId" class="font-semibold w-6rem">Empresa</label>
+            <div>
+                <p-inputGroup>
+                    <input id="empresaId"  readonly="true" name="empresa" [(ngModel)]="stock.empresaDescripcion"
+                     pInputText placeholder="Seleccione su empresa" (click)="mostrarEmpresa()" required
+                     #empresa="ngModel" [ngClass]="{'ng-invalid ng-dirty':empresa.invalid && empresa.touched}" />
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarEmpresa()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="sucursalId" class="font-semibold w-6rem">Sucursal</label>
+            <div>
+                <p-inputGroup>
+                    <input id="sucursalId" readonly="true" name="sucursal" [(ngModel)]="stock.sucursalDescripcion"
+                     pInputText placeholder="Seleccione su sucursal" (click)="mostrarSucursal()" required
+                     #sucursal="ngModel" [ngClass]="{'ng-invalid ng-dirty': sucursal.invalid && sucursal.touched}"/>
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarSucursal()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="bodegaId" class="font-semibold w-6rem">Bodega</label>
+            <div>
+                <p-inputGroup>
+                    <input id="bodegaId" readonly="true" name="bodega" [(ngModel)]="stock.bodegaDescripcion"
+                     pInputText placeholder="Seleccione su bodega" (click)="mostratBodega()" required
+                     #bodega="ngModel" [ngClass]="{'ng-invalid ng-dirty': bodega.invalid && bodega.touched}"/>
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostratBodega()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <p-divider type="solid" />
+        <div class="flex justify-content-end flex-column sm:flex-row">
+            <button pButton label="Guardar" class="p-button m-2" (click)="enviarstock(form)" ></button>
+            <button pButton label="Cancelar" class="p-button-outlined m-2" (click)="cancelarstock(form)"></button>
+        </div>
+    </form>    
+</p-dialog>
+<p-toast position="top-left"></p-toast>
+<app-findSucursal (seleccionarSucursal)="almacenarSucursal($event)"></app-findSucursal>
+<app-findempresa (seleccionarEmpresa)="almacenarEmpresa($event)"></app-findempresa>    
+<app-findBodega (seleccionarBodega)="almacenarBodega($event)"/>
+<app-findProducto (seleccionarProducto)="almacenarProducto($event)"/>

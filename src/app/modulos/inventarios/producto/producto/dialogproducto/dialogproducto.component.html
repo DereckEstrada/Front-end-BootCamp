@@ -1,41 +1,72 @@
 <p-dialog #dialogoGenerico [header]="'Información del Producto'" [(visible)]="visibleClient" [modal]="true" showEffect="fade"
     [style]="{ height: '80%'}">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="nombreCliente" class="font-semibold w-6rem">Nombre</label>
-        <input pInputText [(ngModel)]="nombre" id="nombreCliente" class="flex-auto" name="nombre" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente"  class="font-semibold w-6rem">Precio</label>
-        <input name="precio" [ngModel]="precio | currency" pInputText id="identificacionCliente" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Categor&iacute;a</label>
-        <p-inputGroup>
-            <input [(ngModel)]="categoria" [disabled]="true" pInputText placeholder="Seleccione su categoría" />
-            <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarCateogria()"></button>
-        </p-inputGroup>
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Empresa</label>
-        <p-inputGroup>
-            <input [(ngModel)]="empresa" [disabled]="true" pInputText placeholder="Seleccione su empresa" />
-            <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarEmpresa()"></button>
-        </p-inputGroup>
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Proveedor</label>
-        <input pInputText id="identificacionCliente" [(ngModel)]="proveedor" class="flex-auto" autocomplete="off" name="Proveedor"/>
-    </div>
-
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Estatus</label>
-        <p-dropdown [options]="statuses" name="estatus" [(ngModel)]="estatus" optionLabel="label"></p-dropdown>
-    </div>
-    <p-divider type="solid" />
-    <div class="flex justify-content-end flex-column sm:flex-row">
-        <button pButton label="Guardar" class="p-button m-2" (click)="guardar()"></button>
-        <button pButton label="Cancelar" class="p-button-outlined m-2"></button>
-    </div>
+    <form #form="ngForm"[style]="{ marginTop: '25px'}" >
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="productoDescripcion" class="font-semibold w-6rem">Nombre</label>
+            <input pInputText [(ngModel)]="producto.prodDescripcion" id="productoDescripcion"
+             class="flex-auto" name="nombre" autocomplete="off"
+             required #nombre="ngModel" [ngClass]="{'ng-invalid ng-dirty':nombre.invalid && nombre.touched}"/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="precioProducto"  class="font-semibold w-6rem">Precio</label>
+            <p-inputNumber 
+            [(ngModel)]="producto.prodUltPrecio" 
+            inputId="currency-us" 
+            mode="currency" 
+            currency="USD" 
+            name="precio"
+            [id]="'precioProducto'"
+            required
+            locale="en-US" #precio="ngModel" [ngClass]="{'ng-invalid ng-dirty':precio.invalid && precio.touched}"/> 
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="categoriaId" class="font-semibold w-6rem">Categor&iacute;a</label>
+            <div>
+                <p-inputGroup>
+                    <input id="categoriaId" readonly="true" name="categoria" [(ngModel)]="producto.categoriaDesripcion" 
+                    pInputText placeholder="Seleccione su categoría" (click)="mostrarCateogria()" required
+                    #categoria="ngModel" [ngClass]="{'ng-invalid ng-dirty':categoria.invalid && categoria.touched}"/>
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarCateogria()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="empresaId" class="font-semibold w-6rem">Empresa</label>
+            <div>
+                <p-inputGroup>
+                    <input id="empresaId"  readonly="true" name="empresa" [(ngModel)]="producto.empresaDescripcion"
+                     pInputText placeholder="Seleccione su empresa" (click)="mostrarEmpresa()" required
+                     #empresa="ngModel" [ngClass]="{'ng-invalid ng-dirty':empresa.invalid && empresa.touched}" />
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarEmpresa()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="proveedorId" class="font-semibold w-6rem">Proveedor</label>
+            <div>
+                <p-inputGroup>
+                    <input id="proveedorId" readonly="true" name="proveedor" [(ngModel)]="producto.proveedorDescripcion"
+                     pInputText placeholder="Seleccione su proveedor" (click)="mostratProveedor()" required
+                     #proveedor="ngModel" [ngClass]="{'ng-invalid ng-dirty': proveedor.invalid && proveedor.touched}"/>
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostratProveedor()"></button>
+                </p-inputGroup>
+            </div>
+        </div>
+    
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estadoId" class="font-semibold w-6rem">Estado</label>
+            <p-dropdown id="estadoId" [options]="statuses" [(ngModel)]="producto.estadoId" placeholder="Seleccione el estado"
+             name="estado" optionValue="value"  optionLabel="label" required
+             #estado="ngModel" [ngClass]="{'ng-invalid ng-dirty': estado.invalid &&  (estado.dirty || estado.touched)}"></p-dropdown>
+        </div>
+        <p-divider type="solid" />
+        <div class="flex justify-content-end flex-column sm:flex-row">
+            <button pButton label="Guardar" class="p-button m-2" (click)="enviarProducto(form)" ></button>
+            <button pButton label="Cancelar" class="p-button-outlined m-2" (click)="cancelarProducto(form)"></button>
+        </div>
+    </form>    
 </p-dialog>
-<app-findcategoria (seleccionarCategoria)="fijarCategoria()"></app-findcategoria>
-<app-findempresa (selecionarEmpresa)="fijarEmpresa()"></app-findempresa>
+<p-toast position="top-left"></p-toast>
+<app-findcategoria (seleccionarCategoria)="almacenarCategoria($event)"></app-findcategoria>
+<app-findempresa (seleccionarEmpresa)="almacenarEmpresa($event)"></app-findempresa>    
+<app-findproveedor (seleccionarProveedor)="almacenarProveedor($event)"/>

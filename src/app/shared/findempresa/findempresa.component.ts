@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CatalogoBase } from 'src/app/datasource/interface/interface.base';
-import { CatalogoService } from 'src/app/services/empresacatalogo.service';
+import { DataQueryModel } from 'src/app/models/dataQuery.model';
+import { EmpresaModel } from 'src/app/models/empresa.model';
+import { RequestModel } from 'src/app/models/request.model';
+import { EmpresaService } from 'src/app/services/empresa.service';
 
 @Component({
   selector: 'app-findempresa',
@@ -11,80 +13,49 @@ import { CatalogoService } from 'src/app/services/empresacatalogo.service';
 })
 export class FindempresaComponent {
 
-  constructor ( private dialogService: DialogService, private catalogoService: CatalogoService ) {}
-
-  @Output()
-  seleccionarEmpresa = new EventEmitter();
-
   @ViewChild('dialogEmpresa')  dialogoEmpresa: DynamicDialogRef;
-
-
-  responseSimulate: any = {
-    codeResp: "Ok",
-    msg: 'Realizado con exito',
-    data: {
-        empresas: [
-            {
-                idEmpresa: 1,
-                descripcion: 'GSM electronics'
-            },
-            {
-                idEmpresa: 2,
-                descripcion: 'Apple Inc.'
-            }
-        ]
-    }
-}
+  
+  @Output() seleccionarEmpresa = new EventEmitter();
+    
+  private _serviceEmpresa=inject(EmpresaService)
 
   mostrarFindEmpresas: boolean = false;
-
+  buscarEmpresa:string='';
   visibleTable: boolean = false;
-
-  empresaSeleccionada: any;
-
-  listEmpresas: CatalogoBase[];
-
-  empresaDefault: CatalogoBase = {
-    id: '',
-    valor: ''
-  }
-
   
+  empresaSeleccionada: EmpresaModel=new EmpresaModel();
+  
+  dataEmpresa: EmpresaModel[]=[];
 
-  findEmpresas() {
-    let rqBodyEmpresas = {
-      idEmpresa: this.empresaDefault.id,
-      descripcionEmpresa: this.empresaDefault.valor
+  constructor ( private dialogService: DialogService ) {}  
+
+  findEmpresa(){
+    let dataQuery:DataQueryModel={
+      OpcionData:'nombre',
+      DataFirstQuery:this.buscarEmpresa
     }
-
-    let rqCatalogoEmpresa= {
-      operacion: 'findEmpresa',
-      data: rqBodyEmpresas
+    let request:RequestModel={
+      Usuario:'',
+      Ip:'000',
+      Modulo:1,
+      Operacion:'GET',
+      Data:dataQuery
     }
-
-    this.catalogoService.findCatalogoEmpresa(rqCatalogoEmpresa).subscribe({
-      next: (resp) => {
-        if(resp.codeResp === 'Ok'){
-          let lempresas: any[] = resp.data.empresas;
-          lempresas.forEach( empresa => {
-
-            let empresaCatalogo: CatalogoBase = {
-              id: empresa.idEmpresa,
-              valor: empresa.descripcion
-            }
-            this.listEmpresas.push(empresaCatalogo);
-          })
+    this.visibleTable=true;
+    this._serviceEmpresa.getEmpresa(request).subscribe({
+      next:resp=>{
+        if(resp['code']==200){
+          this.dataEmpresa=resp['data'];
+        }else{
+          this.dataEmpresa=[];
         }
-      },
-      error: (error) => {
-        alert(error);
       }
-
-    });
-
+    })
   }
 
   seleccionarCerrar() {
-    this.seleccionarEmpresa.emit();
+    this.mostrarFindEmpresas=false
+    this.visibleTable=false;
+    this.seleccionarEmpresa.emit(this.empresaSeleccionada);
   }
 }

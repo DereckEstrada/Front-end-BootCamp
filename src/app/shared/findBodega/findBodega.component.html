@@ -1,0 +1,41 @@
+<p-dialog #dialogBodega closable="true" header="Bodega" [(visible)]="mostrarFindBodega">
+    <form autocomplete="off">
+        <div class="flex align-items-end">
+            <div #divDescripcionEmpresa class="m-2">
+                <label for="BodegaSearch" class="font-bold block mb-2">Bodega</label>
+                <input [(ngModel)]="buscarBodega" pInputText type="text" name="BodegaSearch" (keyup.enter)="findBodega()" id="descripcionEmpresa" placeholder="Buscar nombre de empresa" pInputText>
+            </div>
+            <div #DivBotonBuscar class="m-2">
+                <button pRipple pButton value="Buscar" (click)="findBodega()">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <div #divTabla class="pt-3 text-align-center" *ngIf="visibleTable">
+        <span [style]="{width: '26vw'}" for="idcategoria" class=" font-bold block mb-3"> Da doble click para selecionar una bodega</span>
+        <p-table [value]="dataBodega" selectionMode="single" [(selection)]="bodegaSeleccionado">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: 2rem">Id </th>
+                    <th style="min-width: 3rem">Bodega</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-bodega>
+                <tr [pSelectableRow]="bodega" [pSelectableRowIndex]="rowIndex" (dblclick)="seleccionarCerrar()">
+                    <td>{{ bodega.bodegaId }}</td>
+                    <td>{{ bodega.bodegaNombre }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">Sin resultados</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando bodegas...</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>

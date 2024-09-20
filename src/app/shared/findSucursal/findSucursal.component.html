@@ -1,0 +1,41 @@
+<p-dialog #dialogSucursal closable="true" header="Sucursal" [(visible)]="mostrarFindSucursal">
+    <form autocomplete="off">
+        <div class="flex align-items-end">
+            <div #divDescripcionEmpresa class="m-2">
+                <label for="sucursalSearch" class="font-bold block mb-2">Sucursal</label>
+                <input [(ngModel)]="buscarSucursal" pInputText type="text" name="sucursalSearch" (keyup.enter)="findSucursal()" id="descripcionEmpresa" placeholder="Buscar nombre de empresa" pInputText>
+            </div>
+            <div #DivBotonBuscar class="m-2">
+                <button pRipple pButton value="Buscar" (click)="findSucursal()">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <div #divTabla class="pt-3 text-align-center" *ngIf="visibleTable">
+        <span [style]="{width: '26vw'}" for="idcategoria" class=" font-bold block mb-3"> Da doble click para selecionar una sucursal</span>
+        <p-table [value]="dataSucursal" selectionMode="single" [(selection)]="sucursalSeleccionado">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: 2rem">Id </th>
+                    <th style="min-width: 3rem">Sucursal</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sucursal>
+                <tr [pSelectableRow]="sucursal" [pSelectableRowIndex]="rowIndex" (dblclick)="seleccionarCerrar()">
+                    <td>{{ sucursal.sucursalId }}</td>
+                    <td>{{ sucursal.sucursalNombre }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">Sin resultados</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando empresa...</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>

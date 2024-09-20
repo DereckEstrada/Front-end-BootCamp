@@ -1,11 +1,12 @@
+import { UtilitiesRoutingModule } from './../../../../demo/components/utilities/utilities-routing.module';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { DialogproductoComponent } from './dialogproducto/dialogproducto.component';
 import { ProductosService } from 'src/app/services/productos.service';
-import { CategoriaEnum } from 'src/app/datasource/categoriaenum';
-import { AccionApi } from 'src/app/datasource/accionapienum';
+import { DataQueryModel } from 'src/app/models/dataQuery.model';
+import { RequestModel } from 'src/app/models/request.model';
+import { ProductoModel } from 'src/app/models/producto.model';
 
 @Component({
   selector: 'app-componente',
@@ -14,20 +15,18 @@ import { AccionApi } from 'src/app/datasource/accionapienum';
   providers: [MessageService, ConfirmationService]
 })
 export class ProductoComponent implements OnInit, AfterViewInit {
+  @ViewChild(DialogproductoComponent) dialogoCliente: DialogproductoComponent;
+  private _serviceProducto=inject(ProductosService);
 
-  constructor(public layoutService: LayoutService,
-    private messageService: MessageService
-  ) { }
+  constructor(public layoutService: LayoutService,private messageService: MessageService) { }
   
+  productosList: ProductoModel[] = [];
+  producto:ProductoModel=new ProductoModel();
+  operacion:string='';
   loading: boolean = true;
-
-  productoService = inject(ProductosService);
-
+  messageNotificate:string=''
   activityValues: number[] = [0, 100];
 
-  @ViewChild(DialogproductoComponent) dialogoCliente: DialogproductoComponent;
-
-  productos: any[] = [];
 
   statuses = [
     { label: 'Inactivo', value: 'unqualified' },
@@ -39,140 +38,86 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    let datarq = {
+    let dataQuery:DataQueryModel = {
       "OpcionData": "all"
     }
-
-
-    let getProductrequest: any = {
+    let requestGetProducto: RequestModel = {
       Usuario: 'user',
       Ip: '0.0.0.0',
       Modulo: 1,
       Operacion: "GET",
-      Data: datarq
+      Data: dataQuery
     }
-    this.cargaDatosLocal();
+    this.cargaDatosLocal(requestGetProducto);
     
   }
 
-  dialogNuevoCliente() {
-    this.dialogoCliente.visibleClient = true;
-    this.dialogoCliente.abrir();
-    this.dialogoCliente.esNuevo = true;
-  }
-
-  cargarProductos(resp: any) {
-    this.productos = resp.data;
-  }
-
-  guardarProducto(dataProducto: any) {
-    this.loading = true;
-    let datoMantenimientoProducto = this.defineDataGuardar(dataProducto);
-
-    if(dataProducto.accion == AccionApi.GUARDAR) {
-
-      let mantenimientoProdRq: any = {
-        Modulo: 1,
-        Operacion: "PUT",
-        Data: datoMantenimientoProducto
+  cargaDatosLocal(request:RequestModel){
+    this._serviceProducto.getProductos(request).subscribe({
+      next:resp=>{
+        if(resp["code"]==200){
+          this.productosList=resp['data']
+        }
       }
-      /*this.productoService.mantenimientoProductos(mantenimientoProdRq).subscribe({
-        next: (resp) => {
-          this.productos = [];
-          this.consultar();
-        },
-        error: (error) => {
-  
-        }
-      })*/
-    } 
-
-    if(dataProducto.accion === AccionApi.ACTUALIZAR) {
-      
-    }
-
-
-      this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:'Guardado correctamente'});
-      this.loading = false;
-      this.dialogoCliente.visibleClient = false;
+    });
   }
-
-  defineDataGuardar(dataProducto: any): any {
-    let valorEstatus = dataProducto.estatus;
-    let productoObject = {
-      "prodDescripcion": dataProducto.nombre,
-      "prodUltPrecio": dataProducto.precio,
-      "categoriaId": dataProducto.categoria.id,
-      "categoriaDesripcion": dataProducto.categoria.valor,
-      "empresaId": 1,
-      "empresaDescripcion": dataProducto.empresa,
-      "proveedorId": 1,
-      "proveedorDescripcion": dataProducto.proveedor,
-      "estadoId": valorEstatus == 'activo' ? 1 : 0,
-      "estadoDescripcion": dataProducto.estatus,
-      "usuIdReg": 1,
-      "usuRegName": localStorage.getItem('userLogin')
-    }
-    return productoObject;
-  }
-
-  consultar() {
-    let datarq = {
-      "OpcionData": "all"
-    }
-
-
-    let getProductrequest: any = {
-      Usuario: 'user',
-      Ip: '0.0.0.0',
-      Modulo: 1,
-      Operacion: "GET",
-      Data: datarq
-    }
-  }
-
-  cargaDatosLocal() {
-    setTimeout(() => {
-      this.productos = [
-        {
-          "prodId": 1,
-          "prodDescripcion": "telefono",
-          "prodUltPrecio": 500.00,
-          "categoriaId": 1,
-          "categoriaDesripcion": "computador",
-          "empresaId": 1,
-          "empresaDescripcion": "EmpresaPrueba",
-          "proveedorId": 1,
-          "proveedorDescripcion": "rucPrueba",
-          "estadoId": 1,
-          "estadoDescripcion": "activo",
-          "fechaHoraReg": "2024-07-19T08:23:00",
-          "usuIdReg": 1,
-          "usuRegName": "administrador"
-        },
-        {
-          "prodId": 2,
-          "prodDescripcion": "telefono",
-          "prodUltPrecio": 500.00,
-          "categoriaId": 1,
-          "categoriaDesripcion": "computador",
-          "empresaId": 1,
-          "empresaDescripcion": "EmpresaPrueba",
-          "proveedorId": 1,
-          "proveedorDescripcion": "rucPrueba",
-          "estadoId": 1,
-          "estadoDescripcion": "activo",
-          "fechaHoraReg": "2024-07-20T17:33:00.477",
-          "usuIdReg": 1,
-          "usuRegName": "administrador"
-        }
-      ];
-      this.loading = false;
-    }, 1000)
-  }
-
-  editarProducto(registro: any) {
+  dialogNuevoCliente() {
+    this.operacion='POST';
+    this.messageNotificate='Guardado Correctamente';
     this.dialogoCliente.visibleClient = true;
-    this.dialogoCliente.nombre = registro.prodDescripcion;
   }
+  mantenimientoProducto() {        
+    let request:RequestModel={
+      Usuario:'',
+      Ip:'00',
+      Modulo:1,
+      Operacion:this.operacion,
+      Data:this.producto
+    }
+    this._serviceProducto.mantenimientoProductos(request).subscribe({
+      next:resp=>{
+        if(resp['code']==200){          
+          this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:this.messageNotificate});      
+          this.dialogoCliente.visibleClient = false;
+          this.ngAfterViewInit();
+        }
+      }
+    })        
+  }
+
+  guardarProducto(producto:ProductoModel){
+    this.producto=producto;
+    this.mantenimientoProducto();
+  }
+  
+  actualizarProducto(producto: ProductoModel) {
+    this.operacion='PUT';
+    this.messageNotificate='Actualizado Correctamente';
+    this.dialogoCliente.visibleClient = true;
+    this.dialogoCliente.producto = producto;
+  }
+
+  deleteProducto(producto:ProductoModel){
+    this.operacion='DELETE';
+    this.messageNotificate='Eliminado Correctamente';
+    this.producto=producto;
+    this.mantenimientoProducto();
+  }
+  filtarProducto(filtro:string){
+    let dataQuery:DataQueryModel={
+      OpcionData:'descripcion',
+      DataFirstQuery:filtro
+    }
+    let request:RequestModel={
+      Usuario:'',
+      Ip:'00',
+      Modulo:1,
+      Operacion:'GET',
+      Data:dataQuery
+    }
+    this._serviceProducto.getProductos(request).subscribe({
+      next:resp=>this.productosList=resp['data']
+    });
+
+  }  
 }

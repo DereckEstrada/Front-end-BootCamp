@@ -34,6 +34,7 @@ export class AppMenuComponent implements OnInit {
                 label: 'Operaciones',
                 items: [
                     { label: 'Stock de productos', icon: 'pi pi-fw pi-box' , routerLink: ['/vmtdev/operaciones/stock'] },
+                    { label: 'Punto de Venta', icon: 'pi pi-fw pi-box' , routerLink: ['/vmtdev/operaciones/ventas'] },
                 ]
             },
             {

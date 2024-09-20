@@ -11,12 +11,19 @@ import { DialogingresostockComponent } from './dialogingresostock/dialogingresos
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { dialogRegistrarStockComponent } from './dialogRegistrarStock/dialogRegistrarStock.component';
+import { ToastModule } from 'primeng/toast';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
   declarations: [
     StockComponent,
-    DialogingresostockComponent
+    DialogingresostockComponent,
+    dialogRegistrarStockComponent
   ],
   imports: [
     CommonModule,
@@ -26,10 +33,14 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputTextModule,
     FormsModule,
     DialogModule,
-    DividerModule, 
+    DividerModule,
     DynamicDialogModule,
-    
-  ],
+    ToastModule,
+    InputGroupModule,
+    SharedModule,
+    DropdownModule, FormsModule,InputNumberModule,
+    ToastModule
+],
   exports: [
     StockComponent
   ]

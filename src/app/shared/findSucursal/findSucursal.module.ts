@@ -1,32 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
-import { FindcategoriaComponent } from './findcategoria.component';
-import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FindSucursalComponent } from './findSucursal.component';
 
 
 
 @NgModule({
   declarations: [
-    FindcategoriaComponent
+    FindSucursalComponent
   ],
   imports: [
     CommonModule,
     DialogModule,
+    TableModule,
+    FormsModule,
     DynamicDialogModule,
     InputTextModule,
-    TableModule,
     ButtonModule,
-    RippleModule,
-    FormsModule
+    RippleModule
   ],
   exports: [
-    FindcategoriaComponent
+    FindSucursalComponent
   ]
 })
-export class FindcategoriaModule { }
+export class FindSucursalModule { }

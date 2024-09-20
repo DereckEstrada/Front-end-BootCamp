@@ -1,8 +1,12 @@
 export const environment = {
     production: false,
-    vmtDevApiUrl: 'https://curly-cobras-say.loca.lt',
+    vmtDevApiUrl: 'http://localhost:5098',
     pathAutetication: '/Usuario/RestUsuarioAutenticacion',
-    pathGetProductos: '/Producto/RestProducto',
-    pathEmpresa: '/Empresa/RestEmpresa',
-    pathProveedor: '/Proveedor/RestProveedor'
+    pathRestProductos: '/Producto/RestProducto',
+    pathRestCategoria: '/Catalogo/RestCategoria',
+    pathRestEmpresa: '/Empresa/RestEmpresa',
+    pathRestProveedor: '/Proveedor/RestProveedor',
+    pathRestStock: '/Stock/RestStock',
+    pathRestBodega: '/Bodega/RestBodega',
+    pathRestSucursal: '/Sucursal/RestSucursal',
 };

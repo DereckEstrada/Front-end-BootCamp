@@ -5,6 +5,15 @@ import { FindcategoriaModule } from './findcategoria/findcategoria.module';
 import { FindempresaModule } from './findempresa/findempresa.module';
 import { FindcategoriaComponent } from './findcategoria/findcategoria.component';
 import { FindempresaComponent } from './findempresa/findempresa.component';
+import { FormControl } from '@angular/forms';
+import { FindproveedorComponent } from './findproveedor/findproveedor.component';
+import { FindproveedorModule } from './findproveedor/findproveedor.module';
+import { FindSucursalComponent } from './findSucursal/findSucursal.component';
+import { FindBodegaComponent } from './findBodega/findBodega.component';
+import { FindBodegaModule } from './findBodega/findBodega.module';
+import { FindSucursalModule } from './findSucursal/findSucursal.module';
+import { FindProductoComponent } from './findProducto/findProducto.component';
+import { FindProductoModule } from './findProducto/findProducto.module';
 
 
 
@@ -15,11 +24,19 @@ import { FindempresaComponent } from './findempresa/findempresa.component';
     CommonModule,
     DialogModule,
     FindcategoriaModule,
-    FindempresaModule
+    FindempresaModule, 
+    FindproveedorModule,
+    FindBodegaModule,
+    FindSucursalModule,
+    FindProductoModule
   ],
   exports: [
     FindempresaComponent,
-    FindcategoriaComponent
+    FindcategoriaComponent,
+    FindproveedorComponent,
+    FindSucursalComponent,
+    FindBodegaComponent,
+    FindProductoComponent
   ]
 })
 export class SharedModule { }

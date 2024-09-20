@@ -1,19 +1,31 @@
 <p-dialog #DialogStock header="Ingrese la cantidad de productos" [(visible)]="visible">
     <div class="flex align-items-center gap-3 mb-3">
-        <label for="nombreCliente" class="font-semibold w-6rem">Producto</label>
-        <input pInputText id="nombreCliente" class="flex-auto" autocomplete="off" disabled="true" [(ngModel)]="producto.prodDescripcion" />
+        <label for="productoId" class="font-semibold w-6rem">Producto</label>
+        <input pInputText id="productoId" class="flex-auto" [(ngModel)]="stock.prodDescripcion"  autocomplete="off" disabled="true"  />
     </div>
     <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Stock actual</label>
-        <input pInputText id="identificacionCliente" class="flex-auto" autocomplete="off" />
+        <label for="EmpresaId" class="font-semibold w-6rem">Empresa</label>
+        <input pInputText id="EmpresaId" class="flex-auto" [(ngModel)]="stock.empresaDescripcion"  autocomplete="off" disabled="true"  />
     </div>
     <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Cantidad de ingreso</label>
-        <input pInputText id="identificacionCliente" type="number" class="flex-auto" autocomplete="off" />
+        <label for="sucursalId" class="font-semibold w-6rem">Sucursal</label>
+        <input pInputText id="sucursalId" class="flex-auto" [(ngModel)]="stock.sucursalDescripcion"  autocomplete="off" disabled="true"  />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="bodegaId" class="font-semibold w-6rem">Bodega</label>
+        <input pInputText id="bodegaId" class="flex-auto" [(ngModel)]="stock.bodegaDescripcion"  autocomplete="off" disabled="true"  />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="cantidad" class="font-semibold w-6rem">Stock actual</label>
+        <p-inputNumber id="cantidad" [(ngModel)]="stock.cantidadStock" disabled="true"/>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="newCantidad" class="font-semibold w-6rem">Cantidad de ingreso</label>
+        <p-inputNumber iid="newCantidad" [(ngModel)]="cantidad" />
     </div>
     <p-divider type="solid" />
     <div class="flex justify-content-end flex-column sm:flex-row">
-        <button pButton label="Guardar" class="p-button m-2"></button>
-        <button pButton label="Cancelar" class="p-button-outlined m-2"></button>
+        <button pButton label="Guardar" class="p-button m-2" (click)="guardarStock()"></button>
+        <button pButton label="Cancelar" class="p-button-outlined m-2"(click)="this.visible=false; this.cantidad=0"></button>
     </div>
 </p-dialog>

@@ -4,13 +4,14 @@
 		<div class="text-900 font-bold text-6xl mb-4 text-left">Producto</div>
 		<div class="card">
 			<h5>Lista de productos</h5>
-			<p-table [value]="productos" [loading]="loading">
+			<p-table [value]="productosList" >
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">
 						<button pButton label="Nuevo producto" class="p-button mb-2" icon="pi pi-plus" (click)="dialogNuevoCliente()"></button>
 						<span class="p-input-icon-left mb-2">
 							<i class="pi pi-search"></i>
-							<input pInputText type="text" name="filtro" #filter placeholder="Buscar cliente" class="w-full"/>
+							<input pInputText type="text" name="filtro" #filter placeholder="Buscar producto"
+							 (keyup)="filtarProducto(filter.value)" class="w-full"/>
 						</span>
 					</div>
 				</ng-template>
@@ -47,6 +48,11 @@
 						</th>
 						<th style="min-width: 12rem">
 							<div class="flex justify-content-between align-items-center">
+								Proveedor
+							</div>
+						</th>
+						<th style="min-width: 12rem">
+							<div class="flex justify-content-between align-items-center">
 								Estado
 							</div>
 						</th>
@@ -76,11 +82,14 @@
 							{{ producto.empresaDescripcion }}
 						</td>
 						<td>
+							{{ producto.proveedorDescripcion }}
+						</td>
+						<td>
 							<span [class]="'customer-badge status-' + producto.estadoId == '1' ? 'qualified' : 'unqualified'">{{ producto.estadoDescripcion }}</span>
 						</td>
 						<td>
-							<button pButton class="m-2" type="button" icon="pi pi-pencil" (click)="editarProducto(producto)" ></button>
-							<button pButton class="m-2 severity-danger" severity="danger" type="button" icon="pi pi-trash"></button>
+							<button pButton class="m-2" type="button" icon="pi pi-pencil" (click)="actualizarProducto(producto)" ></button>
+							<button pButton class="m-2 severity-danger" severity="danger" type="button" icon="pi pi-trash" (click)="deleteProducto(producto)"></button>
 						</td>
 					</tr>
 				</ng-template>
@@ -98,5 +107,5 @@
 		</div>
 	</div>
 </div>
-<app-dialogcliente #dialogoProducto (datosProducto)="guardarProducto($event)"></app-dialogcliente>
+<app-dialogcliente #dialogoProducto (productoEmitter)="guardarProducto($event)"></app-dialogcliente>
 <p-toast position="top-left"></p-toast>

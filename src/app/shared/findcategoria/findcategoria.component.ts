@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
-import { categoriaCatalogo } from 'src/app/datasource/catalogos/catalogos';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { CategoriaModel } from 'src/app/models/categoria.model';
+import { DataQueryModel } from 'src/app/models/dataQuery.model';
+import { RequestModel } from 'src/app/models/request.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 
 @Component({
   selector: 'app-findcategoria',
@@ -10,32 +13,48 @@ import { MessageService } from 'primeng/api';
   providers: [DialogService, MessageService]
 })
 export class FindcategoriaComponent {
-
-
-  constructor(private dialogService: DialogService, private messageService: MessageService){}
   @ViewChild('dialogoCategoria')  dialogoCategoria: DynamicDialogRef;
+  @Output()seleccionarCategoria = new EventEmitter();
 
-  @Output()
-  seleccionarCategoria = new EventEmitter();
+  private _servicesCategoria=inject(CategoriaService);
 
   mostrarCategorias: boolean = false;
-
-  dataCategoria: any;
-
-  categoriaSeleccionada: any;
-
+  dataCategoria: CategoriaModel[]=[];
+  categoriaSeleccionada: CategoriaModel;
+  buscarCategoria:string='';
   visibleTable: boolean = false;
 
+  constructor(private dialogService: DialogService, private messageService: MessageService){}
+  
   findCategorias() {
-    setTimeout(() => {
-      this.dataCategoria = categoriaCatalogo;
-      this.visibleTable = true;
-    },
-    2000)
+    let dataQuery:DataQueryModel={
+      OpcionData:'2',
+      DataFirstQuery:this.buscarCategoria
+    }
+    let request:RequestModel={
+      Usuario:'',
+      Ip:'000',
+      Modulo:1,
+      Operacion:'GET',
+      Data:dataQuery
+    }
+    this.visibleTable=true;
+    this._servicesCategoria.getCategoria(request).subscribe({
+      next:resp=>{
+        if(resp['code']==200){
+          this.dataCategoria=resp['data'];
+        }else{
+          this.dataCategoria=[];
+        }
+      }
+    })
   }
 
-  seleccionarCerrar() {
-    this.seleccionarCategoria.emit();
+  seleccionarCerrar() {    
+    this.mostrarCategorias=false;
+    this.visibleTable=false;
+    this.buscarCategoria='';
+    this.seleccionarCategoria.emit(this.categoriaSeleccionada);
   }
 
 }
