@@ -1,0 +1,46 @@
+<p-dialog [(visible)]="visibleClient" [modal]="true" [closable]="false" [dismissableMask]="true" header="Datos de la Bodega">
+  <form #bodegaForm="ngForm" (ngSubmit)="enviarBodega(bodegaForm)">
+    
+    <div class="p-field">
+      <label for="bodegaNombre">Nombre de la Bodega</label>
+      <input pInputText id="bodegaNombre" [(ngModel)]="bodega.bodegaNombre" name="bodegaNombre" required>
+      <div *ngIf="bodegaForm.controls.bodegaNombre?.invalid && bodegaForm.controls.bodegaNombre?.touched" class="p-error">
+        El nombre de la bodega es obligatorio.
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="bodegaDireccion">Dirección</label>
+      <input pInputText id="bodegaDireccion" [(ngModel)]="bodega.bodegaDireccion" name="bodegaDireccion" required>
+      <div *ngIf="bodegaForm.controls.bodegaDireccion?.invalid && bodegaForm.controls.bodegaDireccion?.touched" class="p-error">
+        La dirección es obligatoria.
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="bodegaTelefono">Teléfono</label>
+      <input pInputText id="bodegaTelefono" [(ngModel)]="bodega.bodegaTelefono" name="bodegaTelefono" required>
+      <div *ngIf="bodegaForm.controls.bodegaTelefono?.invalid && bodegaForm.controls.bodegaTelefono?.touched" class="p-error">
+        El teléfono es obligatorio.
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="sucursal">Sucursal</label>
+      <p-inputText id="sucursal" [(ngModel)]="bodega.sucursalDescripcion" name="sucursalDescripcion" readonly></p-inputText>
+      <button type="button" pButton icon="pi pi-search" (click)="mostrarSucursal()" label="Buscar Sucursal"></button>
+    </div>
+
+    <div class="p-field">
+      <label for="estado">Estado</label>
+      <p-dropdown [options]="statuses" [(ngModel)]="bodega.estadoId" name="estadoId" optionLabel="label"></p-dropdown>
+    </div>
+
+    <p-footer>
+      <button pButton type="submit" label="Guardar" [disabled]="bodegaForm.invalid"></button>
+      <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelarBodega(bodegaForm)"></button>
+    </p-footer>
+  </form>
+</p-dialog>
+
+<app-findsucursal #sucursalComponent (sucursalEmitter)="almacenarSucursal($event)"></app-findsucursal>

@@ -1,0 +1,102 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="text-900 font-bold text-6xl mb-4 text-left">Bodegas</div>
+		<div class="card">
+			<h5>Lista de Bodegas</h5>
+			<p-table [value]="bodegas" [loading]="loading">
+				<ng-template pTemplate="caption">
+					<div class="flex justify-content-between flex-column sm:flex-row">
+						<button pButton label="Nueva bodega" class="p-button mb-2" icon="pi pi-plus" (click)="dialogNuevaBodega()"></button>
+						<span class="p-input-icon-left mb-2">
+							<i class="pi pi-search"></i>
+							<input pInputText type="text" name="filtro" #filter placeholder="Buscar bodega" class="w-full"/>
+						</span>
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="min-width: 2rem">
+							<div class="flex justify-content-between align-items-center">
+								N
+							</div>
+						</th>
+						<th style="min-width: 16rem">
+							<div class="flex justify-content-between align-items-center">
+								Nombre de la Bodega
+								<p-columnFilter type="text" field="bodegaNombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+							</div>
+						</th>
+						<th style="min-width: 16rem">
+							<div class="flex justify-content-between align-items-center">
+								Dirección
+								<p-columnFilter type="text" field="bodegaDireccion" display="menu" placeholder="Buscar por dirección"></p-columnFilter>
+							</div>
+						</th>
+						<th style="min-width: 12rem">
+							<div class="flex justify-content-between align-items-center">
+								Teléfono
+								<p-columnFilter type="text" field="bodegaTelefono" display="menu" placeholder="Buscar por teléfono"></p-columnFilter>
+							</div>
+						</th>
+						<th style="min-width: 14rem">
+							<div class="flex justify-content-between align-items-center">
+								Sucursal
+								<p-columnFilter type="text" field="sucursalDescripcion" display="menu" placeholder="Buscar por sucursal"></p-columnFilter>
+							</div>
+						</th>
+						<th style="min-width: 12rem">
+							<div class="flex justify-content-between align-items-center">
+								Estado
+							</div>
+						</th>
+						<th style="min-width: 10rem" colspan="2">
+							<div class="flex justify-content-between align-items-center">
+								Acciones
+							</div>
+						</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-rowIndex="rowIndex" let-bodega>
+					<tr>
+						<td>
+							{{ rowIndex + 1 }}
+						</td>
+						<td>
+							{{ bodega.bodegaNombre }}
+						</td>
+						<td>
+							{{ bodega.bodegaDireccion }}
+						</td>
+						<td>
+							{{ bodega.bodegaTelefono }}
+						</td>
+						<td>
+							{{ bodega.sucursalDescripcion }}
+						</td>
+						<td>
+							<span [class]="bodega.estadoId == '1' ? 'customer-badge status-qualified' : 'customer-badge status-unqualified'">
+								{{ bodega.estadoDescripcion }}
+							</span>
+						</td>
+						<td>
+							<p-button class="m-2" type="button" icon="pi pi-pencil" (click)="editarBodega(bodega)" ></p-button>
+							<p-button class="m-2" severity="danger" type="button" icon="pi pi-trash"></p-button>
+						</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<tr>
+						<td colspan="8">No hay bodegas registradas.</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="loadingbody">
+					<tr>
+						<td colspan="8">Cargando bodegas...</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>
+<app-dialogbodega #dialogoBodega (datosBodega)="guardarBodega($event)"></app-dialogbodega>
+<p-toast position="top-left"></p-toast>
