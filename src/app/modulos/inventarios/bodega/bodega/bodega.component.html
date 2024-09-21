@@ -3,7 +3,7 @@
 		<div class="text-900 font-bold text-6xl mb-4 text-left">Bodegas</div>
 		<div class="card">
 			<h5>Lista de Bodegas</h5>
-			<p-table [value]="bodegas" [loading]="loading">
+			<p-table [value]="bodegasList" [loading]="loading">
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">
 						<button pButton label="Nueva bodega" class="p-button mb-2" icon="pi pi-plus" (click)="dialogNuevaBodega()"></button>
