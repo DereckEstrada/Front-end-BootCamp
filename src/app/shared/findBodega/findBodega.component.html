@@ -3,7 +3,7 @@
         <div class="flex align-items-end">
             <div #divDescripcionEmpresa class="m-2">
                 <label for="BodegaSearch" class="font-bold block mb-2">Bodega</label>
-                <input [(ngModel)]="buscarBodega" pInputText type="text" name="BodegaSearch" (keyup.enter)="findBodega()" id="descripcionEmpresa" placeholder="Buscar nombre de empresa" pInputText>
+                <input [(ngModel)]="buscarBodega" pInputText type="text" name="BodegaSearch" (keyup.enter)="findBodega()" id="descripcionEmpresa" placeholder="Buscar nombre de bodega" pInputText>
             </div>
             <div #DivBotonBuscar class="m-2">
                 <button pRipple pButton value="Buscar" (click)="findBodega()">Buscar</button>

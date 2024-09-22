@@ -6,7 +6,7 @@ import { TableModule } from 'primeng/table';
 import { ComponenteComponent } from './componente/componente.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToastModule } from 'primeng/toast';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { ButtonModule } from 'primeng/button';
 import { SliderModule } from 'primeng/slider';
@@ -19,6 +19,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogclienteComponent } from './componente/dialogcliente/dialogcliente.component';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
+import { FindSucursalModule } from "../../../shared/findSucursal/findSucursal.module";
+import { SharedModule } from 'primeng/api';
+import { InputGroup, InputGroupModule } from 'primeng/inputgroup';
 
 
 @NgModule({
@@ -29,15 +32,19 @@ import { DividerModule } from 'primeng/divider';
   imports: [
     CommonModule,
     ClienteRoutingModule,
-		FormsModule,
-		TableModule,
-		ButtonModule,
-		InputTextModule,
-		DropdownModule,
-		ToastModule,
-		DialogModule,
-		CalendarModule,
-		DividerModule
-  ]
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    ToastModule,
+    DialogModule,
+    CalendarModule,
+    DividerModule,
+    FindSucursalModule,
+	SharedModule,
+  InputGroupModule,
+  ReactiveFormsModule
+]
 })
 export class ClienteModule { }

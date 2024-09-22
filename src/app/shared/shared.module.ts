@@ -14,6 +14,8 @@ import { FindBodegaModule } from './findBodega/findBodega.module';
 import { FindSucursalModule } from './findSucursal/findSucursal.module';
 import { FindProductoComponent } from './findProducto/findProducto.component';
 import { FindProductoModule } from './findProducto/findProducto.module';
+import { FindCiudadModule } from './findCiudad/findCiudad.module';
+import { FindCiudadComponent } from './findCiudad/findCiudad.component';
 
 
 
@@ -28,7 +30,8 @@ import { FindProductoModule } from './findProducto/findProducto.module';
     FindproveedorModule,
     FindBodegaModule,
     FindSucursalModule,
-    FindProductoModule
+    FindProductoModule,
+    FindCiudadModule
   ],
   exports: [
     FindempresaComponent,
@@ -36,7 +39,8 @@ import { FindProductoModule } from './findProducto/findProducto.module';
     FindproveedorComponent,
     FindSucursalComponent,
     FindBodegaComponent,
-    FindProductoComponent
+    FindProductoComponent,
+    FindCiudadComponent
   ]
 })
 export class SharedModule { }
