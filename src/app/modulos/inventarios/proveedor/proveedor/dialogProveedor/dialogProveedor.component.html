@@ -1,0 +1,71 @@
+<p-dialog #dialogoGenerico [header]="'Información proveedor'" [(visible)]="visible" [modal]="true" showEffect="fade"
+    [style]="{ height: '90%'}">    
+    <form #form="ngForm" [style]="{ marginTop: '0px'}" >
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="nombreId" class="font-semibold w-6rem">RUC</label>
+            <div>
+                <input id="rucId"  name="ruc" [(ngModel)]="proveedor.provRuc"
+                 pInputText placeholder="Escriba el ruc"  required autocomplete="off"
+                 #ruc="ngModel" [ngClass]="{'ng-invalid ng-dirty':ruc.invalid && ruc.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="nombreSId" class="font-semibold w-6rem">Nombre</label>
+            <div>
+                <input id="nombreId"  name="nombre" [(ngModel)]="proveedor.provNomComercial"
+                 pInputText placeholder="Escriba el nombre"    autocomplete="off" required #nombre="ngModel"
+                 [ngClass]="{'ng-invalid ng-dirty':nombre.invalid && nombre.touched}" 
+                  />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="razonId" class="font-semibold w-6rem">Raz&oacute;n</label>
+            <div>
+                <input id="razonId"  name="razon" [(ngModel)]="proveedor.provRazon"
+                 pInputText placeholder="Escriba la razon"  required
+                 #razon="ngModel" [ngClass]="{'ng-invalid ng-dirty':razon.invalid && razon.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="direccionId" class="font-semibold w-6rem">Direcci&oacute;n</label>
+            <div>
+                <input id="direccionId"  name="direccion" [(ngModel)]="proveedor.provDireccion"
+                 pInputText placeholder="Escriba la direccion" autocomplete="off" required #direccion="ngModel" 
+                 [ngClass]="{'ng-invalid ng-dirty':direccion.invalid && direccion.touched}" 
+                  />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="telefonoId" class="font-semibold w-6rem">Telefono</label>
+            <div>
+                <input  id="telefonoId"  name="telefonoName" [(ngModel)]="proveedor.provTelefono"
+                 pInputText placeholder="Escriba su telefono" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="categoriaId" class="font-semibold w-6rem">Ciudad</label>
+            <div>
+                <p-inputGroup>
+                    <input id="ciudadId" readonly="true" name="ciudad" [(ngModel)]="proveedor.ciudadDescripcion" 
+                    pInputText placeholder="Seleccione su ciudad" (click)="mostrarCiudad()" required
+                    #ciudad="ngModel" [ngClass]="{'ng-invalid ng-dirty':ciudad.invalid && ciudad.touched}"/>
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarCiudad()"></button>
+                </p-inputGroup>
+            </div>
+        </div>        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estadoId" class="font-semibold w-6rem">Estado</label>
+            <p-dropdown id="estadoId" [options]="statuses" [(ngModel)]="proveedor.estadoId" placeholder="Seleccione el estado"
+             name="estado" optionValue="value"  optionLabel="label" required
+             #estado="ngModel" [ngClass]="{'ng-invalid ng-dirty': estado.invalid &&  (estado.dirty || estado.touched)}"></p-dropdown>
+        </div>
+        <p-divider type="solid" />
+        <div class="flex justify-content-end flex-column sm:flex-row">
+            <button pButton label="Guardar" class="p-button m-2" (click)="enviarProveedor(form)" ></button>
+            <button pButton label="Cancelar" class="p-button-outlined m-2" (click)="cancelarProveedor(form)"></button>
+        </div>
+        
+    </form>    
+</p-dialog>
+<app-findCiudad (seleccionarCiudad)="almacenarCiudad($event)"></app-findCiudad>
+<p-toast position="top-left"></p-toast>

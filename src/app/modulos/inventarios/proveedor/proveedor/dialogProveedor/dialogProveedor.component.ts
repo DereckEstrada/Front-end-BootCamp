@@ -3,21 +3,25 @@ import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Dialog } from 'primeng/dialog';
 import { DynamicDialogComponent } from 'primeng/dynamicdialog';
-import { ClienteModel } from 'src/app/models/cliente.model';
+import { CiudadModel } from 'src/app/models/ciudad.model';
+import { ProveedorModel } from 'src/app/models/proveedor.model';
+import { FindCiudadComponent } from 'src/app/shared/findCiudad/findCiudad.component';
 
 @Component({
-  selector: 'app-dialogcliente',
-  templateUrl: './dialogcliente.component.html',
+  selector: 'app-dialogProveedor',
+  templateUrl: './dialogProveedor.component.html',
   styles: ``
 })
-export class DialogclienteComponent {
+export class dialogProveedorComponent {
   @ViewChild(Dialog) dialogoGenerico: DynamicDialogComponent;
-  @Output() clienteEmitter=new EventEmitter<ClienteModel>();
+  @ViewChild(FindCiudadComponent) ciudadComponente: FindCiudadComponent;
+
+  @Output() proveedorEmitter=new EventEmitter<ProveedorModel>();
 
   private messageService=inject(MessageService)
 
-  cliente:ClienteModel=new ClienteModel();
-  visibleClient: boolean = false;
+  proveedor:ProveedorModel=new ProveedorModel();
+  visible: boolean = false;
 
   statuses: any [] = [
     {
@@ -31,23 +35,30 @@ export class DialogclienteComponent {
   ]
   constructor(){
   }
-  enviarCliente(form:NgForm){
-    console.log(this.cliente)
+  enviarProveedor(form:NgForm){
+    console.log(this.proveedor)
     if(form.invalid){
       Object.values(form.controls).forEach(controls=>controls.markAsTouched());
       this.messageService.add({severity:'error', summary:'Notificación VMTDev Bootcamp', detail:'Hay campos invalidos'});      
       return;
     }
-    this.clienteEmitter.emit(this.cliente);
+    this.proveedorEmitter.emit(this.proveedor);
     this.unTouchedControls(form);
-    this.cliente=new ClienteModel();
+    this.proveedor=new ProveedorModel();
   }
-  cancelarCliente(form:NgForm){
-    this.visibleClient=false;
+  cancelarProveedor(form:NgForm){
+    this.visible=false;
     Object.values(form.controls).forEach(controls=>controls.markAsUntouched());
-    this.cliente=new ClienteModel();
+    this.proveedor=new ProveedorModel();
   }  
   unTouchedControls(form: NgForm){
     Object.values(form.controls).forEach(controls=>controls.markAsUntouched());
+  }
+  mostrarCiudad() {
+    this.ciudadComponente.mostrarFindCiudad = true;
+  }
+  almacenarCiudad(ciudad:CiudadModel){
+    this.proveedor.ciudadId=ciudad.ciudadId;
+    this.proveedor.ciudadDescripcion=ciudad.ciudadNombre;
   }
 }

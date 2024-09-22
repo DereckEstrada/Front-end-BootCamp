@@ -1,28 +1,28 @@
-import { ClienteModel } from './../../../../models/cliente.model';
+import { EmpresaModel } from './../../../../models/empresa.model';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { ClienteService } from 'src/app/services/cliente.service';
+import { EmpresaService } from 'src/app/services/empresa.service';
 import { DataQueryModel } from 'src/app/models/dataQuery.model';
 import { RequestModel } from 'src/app/models/request.model';
-import { DialogclienteComponent } from './dialogcliente/dialogcliente.component';
+import { dialogEmpresaComponent } from './dialogEmpresa/dialogEmpresa.component';
 
 @Component({
-  selector: 'app-componente',
-  templateUrl: './componente.component.html',
+  selector: 'app-empresa',
+  templateUrl: './empresa.component.html',
   styles: ``,
   providers: [MessageService, ConfirmationService]
 })
-export class ComponenteComponent implements OnInit{
-  @ViewChild('dialogCliente') dialogCliente!:DialogclienteComponent;
-  private _serviceCliente=inject(ClienteService);
+export class EmpresaComponent implements OnInit{
+  @ViewChild('dialogEmpresa') dialogEmpresa!:dialogEmpresaComponent;
+  private _serviceEmpresa=inject(EmpresaService);
   private messageService=inject(MessageService)
   message:string='';
   operacion:string='';
-  clienteList:ClienteModel[]=[];
+  empresaList:EmpresaModel[]=[];
   loading: boolean = false;
-  cliente:ClienteModel=new ClienteModel();
+  empresa:EmpresaModel=new EmpresaModel();
   search: string = '';
   ngOnInit(): void {
     this.operacion='GET';
@@ -30,46 +30,46 @@ export class ComponenteComponent implements OnInit{
     this.cargaDatosLocal(request);
   }
   cargaDatosLocal(request:RequestModel){
-    this._serviceCliente.getCliente(request).subscribe({
+    this._serviceEmpresa.getEmpresa(request).subscribe({
       next:resp=>{
         if(resp["code"]==200){
-          this.clienteList=resp['data']
+          this.empresaList=resp['data']
         }
       }
     });
   }  
-  openCreateCliente(){
-    this.dialogCliente.visibleClient=true;
-    this.message='Cliente creado correctamente';
+  openCreateEmpresa(){
+    this.dialogEmpresa.visible=true;
+    this.message='Empresa creada correctamente';
     this.operacion='POST';
   }
-  openUpdateCliente(cliente:ClienteModel){
-   this.dialogCliente.visibleClient=true;
-   this.dialogCliente.cliente=cliente;
-      this.message='Cliente actualizado correctamente';
+  openUpdateEmpresa(empresa:EmpresaModel){
+   this.dialogEmpresa.visible=true;
+   this.dialogEmpresa.empresa=empresa;
+      this.message='Empresa actualizada correctamente';
       this.operacion='PUT';
   }
-  delelteCliente(cliente:ClienteModel){
-    this.cliente=cliente;
-    this.message='Cliente eliminado correctamente';
+  delelteEmpresa(empresa:EmpresaModel){
+    this.empresa=empresa;
+    this.message='Empresa eliminada correctamente';
     this.operacion='DELETE';
-    this.mantenimientoCliente();
+    this.mantenimientoEmpresa();
   }
-  mantenimientoCliente(){
-    let request=this.createRequest(this.cliente);
-    this._serviceCliente.mantenimientoCliente(request).subscribe({
+  mantenimientoEmpresa(){
+    let request=this.createRequest(this.empresa);
+    this._serviceEmpresa.mantenimientoEmpresa(request).subscribe({
       next:resp=>{
         if(resp['code']==200){
           this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:this.message});      
-          this.dialogCliente.visibleClient = false;
+          this.dialogEmpresa.visible = false;
           this.ngOnInit();
         }
       }
     })
   } 
-  guardarCliente(cliente:ClienteModel){
-    this.cliente=cliente;
-    this.mantenimientoCliente();
+  guardarEmpresa(empresa:EmpresaModel){
+    this.empresa=empresa;
+    this.mantenimientoEmpresa();
   } 
 createDataQuery(peticion:string, valor:string):DataQueryModel{
   let dataQuery:DataQueryModel={
@@ -90,12 +90,12 @@ createRequest(data:any):RequestModel{
   return request;
 }
 
-buscarCliente(){
+buscarEmpresa(){
   this.operacion='GET';
   let request=this.createRequest(this.createDataQuery('ruc',this.search));
   console.log(this.search);
-  this._serviceCliente.getCliente(request).subscribe({
-    next:resp=>this.clienteList=resp['data']
+  this._serviceEmpresa.getEmpresa(request).subscribe({
+    next:resp=>this.empresaList=resp['data']
   })
 }
 
