@@ -1,25 +1,80 @@
-<p-dialog [header]="'Información del cliente'" [(visible)]="visibleClient" [modal]="true" showEffect="fade"
-    [style]="{width: '35vw', height: '50%'}">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="nombreCliente" class="font-semibold w-6rem">Nombre</label>
-        <input pInputText id="nombreCliente" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Identificaci&oacute;n</label>
-        <input pInputText id="identificacionCliente" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label class="font-semibold w-6rem">Fecha de ingreso</label>
-        <p-calendar [showIcon]="true" [showOnFocus]="false" inputId="buttondisplay" class="flex-auto"
-            autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="identificacionCliente" class="font-semibold w-6rem">Estatus</label>
-        <p-dropdown [options]="statuses" optionLabel="label"></p-dropdown>
-    </div>
-    <p-divider type="solid" />
-    <div class="flex justify-content-end flex-column sm:flex-row">
-        <button pButton label="Guardar" class="p-button m-2"></button>
-        <button pButton label="Cancelar" class="p-button-outlined m-2"></button>
-    </div>
+<p-dialog #dialogoGenerico [header]="'Información cliente'" [(visible)]="visibleClient" [modal]="true" showEffect="fade"
+    [style]="{ height: '90%'}">    
+    <form #form="ngForm" [style]="{ marginTop: '0px'}" >
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="nombreId" class="font-semibold w-6rem">Primer Nombre</label>
+            <div>
+                <input id="nombreId"  name="nombre" [(ngModel)]="cliente.clienteNombre1"
+                 pInputText placeholder="Escriba su primer nombre"  required autocomplete="off"
+                 #nombre="ngModel" [ngClass]="{'ng-invalid ng-dirty':nombre.invalid && nombre.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="nombreSId" class="font-semibold w-6rem">Segundo Nombre</label>
+            <div>
+                <input id="nombreSId"  name="nombreS" [(ngModel)]="cliente.clienteNombre2"
+                 pInputText placeholder="Escriba su segundo nombre"   autocomplete="off"
+                  />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="apellidosId" class="font-semibold w-6rem">Primer Apellido</label>
+            <div>
+                <input id="apellidosId"  name="apellidos" [(ngModel)]="cliente.clienteApellido1"
+                 pInputText placeholder="Escriba su primer apellido"  required
+                 #apellido="ngModel" [ngClass]="{'ng-invalid ng-dirty':apellido.invalid && apellido.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="SapellidosId" class="font-semibold w-6rem">Segundo Apellido</label>
+            <div>
+                <input id="SapellidosId"  name="Sapellidos" [(ngModel)]="cliente.clienteApellido2"
+                 pInputText placeholder="Escriba su segundo apellido" 
+                  />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="rucId" class="font-semibold w-6rem">RUC</label>
+            <div>
+                <input  id="rucId"  name="rucName" [(ngModel)]="cliente.clienteRuc"
+                 pInputText placeholder="Escriba su RUC"  required
+                 #ruc="ngModel" [ngClass]="{'ng-invalid ng-dirty':ruc.invalid && ruc.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="emailId" class="font-semibold w-6rem">Email</label>
+            <div>
+                <input id="emailId"  name="email" [(ngModel)]="cliente.clienteEmail"
+                 pInputText placeholder="Escriba su email"  required pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"
+                 #email="ngModel" [ngClass]="{'ng-invalid ng-dirty':email.invalid && email.touched}" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="telefonoId" class="font-semibold w-6rem">Telefono</label>
+            <div>
+                <input  id="telefonoId"  name="telefonoName" [(ngModel)]="cliente.clienteTelefono"
+                 pInputText placeholder="Escriba su telefono" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="direccionId" class="font-semibold w-6rem">Direccion</label>
+            <div>
+                <input id="direccionId"  name="direccion" [(ngModel)]="cliente.clienteDireccion"
+                 pInputText placeholder="Escriba su direccion" />
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estadoId" class="font-semibold w-6rem">Estado</label>
+            <p-dropdown id="estadoId" [options]="statuses" [(ngModel)]="cliente.estadoId" placeholder="Seleccione el estado"
+             name="estado" optionValue="value"  optionLabel="label" required
+             #estado="ngModel" [ngClass]="{'ng-invalid ng-dirty': estado.invalid &&  (estado.dirty || estado.touched)}"></p-dropdown>
+        </div>
+        <p-divider type="solid" />
+        <div class="flex justify-content-end flex-column sm:flex-row">
+            <button pButton label="Guardar" class="p-button m-2" (click)="enviarCliente(form)" ></button>
+            <button pButton label="Cancelar" class="p-button-outlined m-2" (click)="cancelarCliente(form)"></button>
+        </div>
+        
+    </form>    
 </p-dialog>
+<p-toast position="top-left"></p-toast>

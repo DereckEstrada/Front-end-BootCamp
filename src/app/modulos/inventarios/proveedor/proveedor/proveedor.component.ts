@@ -1,28 +1,27 @@
-import { ClienteModel } from './../../../../models/cliente.model';
+import { ProveedorModel } from './../../../../models/proveedor.model';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { ClienteService } from 'src/app/services/cliente.service';
+import { ProveedorService } from 'src/app/services/proveedor.service';
 import { DataQueryModel } from 'src/app/models/dataQuery.model';
 import { RequestModel } from 'src/app/models/request.model';
-import { DialogclienteComponent } from './dialogcliente/dialogcliente.component';
+import { dialogProveedorComponent } from './dialogProveedor/dialogProveedor.component';
 
 @Component({
-  selector: 'app-componente',
-  templateUrl: './componente.component.html',
+  selector: 'app-proveedor',
+  templateUrl: './proveedor.component.html',
   styles: ``,
   providers: [MessageService, ConfirmationService]
 })
-export class ComponenteComponent implements OnInit{
-  @ViewChild('dialogCliente') dialogCliente!:DialogclienteComponent;
-  private _serviceCliente=inject(ClienteService);
+export class ProveedorComponent implements OnInit{
+  @ViewChild('dialogProveedor') dialogProveedor!:dialogProveedorComponent;
+  private _serviceProveedor=inject(ProveedorService);
   private messageService=inject(MessageService)
   message:string='';
   operacion:string='';
-  clienteList:ClienteModel[]=[];
+  proveedorList:ProveedorModel[]=[];
   loading: boolean = false;
-  cliente:ClienteModel=new ClienteModel();
+  proveedor:ProveedorModel=new ProveedorModel();
   search: string = '';
   ngOnInit(): void {
     this.operacion='GET';
@@ -30,46 +29,46 @@ export class ComponenteComponent implements OnInit{
     this.cargaDatosLocal(request);
   }
   cargaDatosLocal(request:RequestModel){
-    this._serviceCliente.getCliente(request).subscribe({
+    this._serviceProveedor.getProveedor(request).subscribe({
       next:resp=>{
         if(resp["code"]==200){
-          this.clienteList=resp['data']
+          this.proveedorList=resp['data']
         }
       }
     });
   }  
-  openCreateCliente(){
-    this.dialogCliente.visibleClient=true;
-    this.message='Cliente creado correctamente';
+  openCreateProveedor(){
+    this.dialogProveedor.visible=true;
+    this.message='Proveedor creado correctamente';
     this.operacion='POST';
   }
-  openUpdateCliente(cliente:ClienteModel){
-   this.dialogCliente.visibleClient=true;
-   this.dialogCliente.cliente=cliente;
-      this.message='Cliente actualizado correctamente';
+  openUpdateProveedor(proveedor:ProveedorModel){
+   this.dialogProveedor.visible=true;
+   this.dialogProveedor.proveedor=proveedor;
+      this.message='Proveedor actualizado correctamente';
       this.operacion='PUT';
   }
-  delelteCliente(cliente:ClienteModel){
-    this.cliente=cliente;
-    this.message='Cliente eliminado correctamente';
+  delelteProveedor(proveedor:ProveedorModel){
+    this.proveedor=proveedor;
+    this.message='Proveedor eliminado correctamente';
     this.operacion='DELETE';
-    this.mantenimientoCliente();
+    this.mantenimientoProveedor();
   }
-  mantenimientoCliente(){
-    let request=this.createRequest(this.cliente);
-    this._serviceCliente.mantenimientoCliente(request).subscribe({
+  mantenimientoProveedor(){
+    let request=this.createRequest(this.proveedor);
+    this._serviceProveedor.mantenimientoProveedor(request).subscribe({
       next:resp=>{
         if(resp['code']==200){
           this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:this.message});      
-          this.dialogCliente.visibleClient = false;
+          this.dialogProveedor.visible = false;
           this.ngOnInit();
         }
       }
     })
   } 
-  guardarCliente(cliente:ClienteModel){
-    this.cliente=cliente;
-    this.mantenimientoCliente();
+  guardarProveedor(Proveedor:ProveedorModel){
+    this.proveedor=Proveedor;
+    this.mantenimientoProveedor();
   } 
 createDataQuery(peticion:string, valor:string):DataQueryModel{
   let dataQuery:DataQueryModel={
@@ -90,14 +89,12 @@ createRequest(data:any):RequestModel{
   return request;
 }
 
-buscarCliente(){
+buscarProveedor(){
   this.operacion='GET';
   let request=this.createRequest(this.createDataQuery('ruc',this.search));
-  console.log(this.search);
-  this._serviceCliente.getCliente(request).subscribe({
-    next:resp=>this.clienteList=resp['data']
+  this._serviceProveedor.getProveedor(request).subscribe({
+    next:resp=>this.proveedorList=resp['data']
   })
 }
-
 
 }
