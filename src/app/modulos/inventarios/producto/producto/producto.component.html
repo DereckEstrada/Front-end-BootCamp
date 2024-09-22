@@ -85,7 +85,8 @@
 							{{ producto.proveedorDescripcion }}
 						</td>
 						<td>
-							<span [class]="'customer-badge status-' + producto.estadoId == '1' ? 'qualified' : 'unqualified'">{{ producto.estadoDescripcion }}</span>
+							<span [class]="producto.estadoId == '1' ? 'customer-badge status-qualified' : 'customer-badge status-unqualified'">
+								{{ producto.estadoDescripcion }}</span>
 						</td>
 						<td>
 							<button pButton class="m-2" type="button" icon="pi pi-pencil" (click)="actualizarProducto(producto)" ></button>

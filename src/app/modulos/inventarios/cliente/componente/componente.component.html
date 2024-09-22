@@ -107,8 +107,9 @@
 							{{ cliente.fechaHoraReg | date }}
 						</td>
 						<td>
-							<span [class]="'customer-badge status-' + cliente.estadoDescripcion">{{cliente.estadoDescripcion}}</span>
-						</td>
+							<span [class]="cliente.estadoId == '1' ? 'customer-badge status-qualified' : 'customer-badge status-unqualified'">
+								{{ cliente.estadoDescripcion }}
+							</span>						</td>
 						<td>
 							<p-button class="m-2" type="button" icon="pi pi-pencil" (click)="openUpdateCliente(cliente)"></p-button>
 							<p-button class="m-2" severity="danger" type="button" icon="pi pi-trash" (click)="delelteCliente(cliente)"></p-button>

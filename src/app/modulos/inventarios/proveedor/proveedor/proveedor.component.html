@@ -107,7 +107,8 @@
 							{{ proveedor.fechaHoraReg | date }}
 						</td>
 						<td>
-							<span [class]="'customer-badge status-' + proveedor.estadoDescripcion">{{proveedor.estadoDescripcion}}</span>
+							<span [class]="proveedor.estadoId == '1' ? 'customer-badge status-qualified' : 'customer-badge status-unqualified'">
+								{{ proveedor.estadoDescripcion }}</span>
 						</td>
 						<td>
 							<p-button class="m-2" type="button" icon="pi pi-pencil" (click)="openUpdateProveedor(proveedor)"></p-button>
