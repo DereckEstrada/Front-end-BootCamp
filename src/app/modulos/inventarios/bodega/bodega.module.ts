@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ProductoRoutingModule } from './producto-routing.module';
 import { TableModule } from 'primeng/table';
-import { ProductoComponent } from './producto/producto.component';
-import { DialogproductoComponent } from './producto/dialogproducto/dialogproducto.component';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -12,19 +8,21 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
-import { InputGroupModule } from 'primeng/inputgroup';
+import { BodegaRoutingModule } from './bodega-routing.module';
+import { BodegaComponent } from './bodega/bodega.component';
+import { DialogBodegaComponent } from './bodega/dialogbodega/dialogbodega.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputGroupModule } from 'primeng/inputgroup';
 
 
 @NgModule({
   declarations: [
-    ProductoComponent,
-    DialogproductoComponent
+    BodegaComponent,
+    DialogBodegaComponent
   ],
   imports: [
     CommonModule,
-    ProductoRoutingModule,
+    BodegaRoutingModule,
     TableModule,
     DialogModule,
     CalendarModule,
@@ -33,9 +31,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputTextModule,
     FormsModule,
     ToastModule,
-    InputGroupModule,
+    DialogModule,
     SharedModule,
-    InputNumberModule
-]
+    InputGroupModule
+  ]
 })
-export class ProductoModule { }
+export class BodegaModule { }

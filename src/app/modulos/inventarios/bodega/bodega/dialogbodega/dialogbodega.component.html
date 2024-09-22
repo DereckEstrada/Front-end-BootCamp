@@ -1,0 +1,47 @@
+<p-dialog #dialogoGenerico [header]="'Información de Bodega'" [(visible)]="visible" [modal]="true" showEffect="fade"
+    [style]="{ height: '65%'}">
+    <form #form="ngForm"[style]="{ marginTop: '25px'}" >
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="bodegaNombre" class="font-semibold w-6rem">Nombre</label>
+            <input pInputText [(ngModel)]="bodega.bodegaNombre" id="bodegaNombre"
+             class="flex-auto" name="nombre" autocomplete="off"
+             required #nombre="ngModel" [ngClass]="{'ng-invalid ng-dirty':nombre.invalid && nombre.touched}"/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+          <label for="direccionId" class="font-semibold w-6rem">Direccion</label>
+          <input pInputText [(ngModel)]="bodega.bodegaDireccion" id="direccionId"
+           class="flex-auto" name="direccion" autocomplete="off"
+           required #direccion="ngModel" [ngClass]="{'ng-invalid ng-dirty':direccion.invalid && direccion.touched}"/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="telefonoId" class="font-semibold w-6rem">Telefono</label>
+            <input pInputText [(ngModel)]="bodega.bodegaTelefono" id="telefonoId"
+            class="flex-auto" name="telefono" autocomplete="off"
+            />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="sucursalId" class="font-semibold w-6rem">Sucursal</label>
+            <div>
+                <p-inputGroup>
+                    <input id="sucursalId"  readonly="true" name="sucursal" [(ngModel)]="bodega.sucursalDescripcion"
+                     pInputText placeholder="Seleccione su sucursal" (click)="mostrarSucursal()" required
+                     #sucursal="ngModel" [ngClass]="{'ng-invalid ng-dirty':sucursal.invalid && sucursal.touched}" />
+                    <button type="button" pButton icon="pi pi-search"  class="p-button" (click)="mostrarSucursal()"></button>
+                </p-inputGroup>
+            </div>
+        </div>      
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estadoId" class="font-semibold w-6rem">Estado</label>
+            <p-dropdown id="estadoId" [options]="statuses" [(ngModel)]="bodega.estadoId" placeholder="Seleccione el estado"
+             name="estado" optionValue="value"  optionLabel="label" required
+             #estado="ngModel" [ngClass]="{'ng-invalid ng-dirty': estado.invalid &&  (estado.dirty || estado.touched)}"></p-dropdown>
+        </div>
+        <p-divider type="solid" />
+        <div class="flex justify-content-end flex-column sm:flex-row">
+            <button pButton label="Guardar" class="p-button m-2" (click)="enviarBodega(form)" ></button>
+            <button pButton label="Cancelar" class="p-button-outlined m-2" (click)="cancelarBodega(form)"></button>
+        </div>
+    </form>    
+</p-dialog>
+<p-toast position="top-left"></p-toast>
+<app-findSucursal (seleccionarSucursal)="almacenarSucursal($event)"></app-findSucursal>
