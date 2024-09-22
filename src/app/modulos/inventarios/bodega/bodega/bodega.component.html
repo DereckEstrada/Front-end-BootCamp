@@ -9,7 +9,7 @@
 						<button pButton label="Nueva bodega" class="p-button mb-2" icon="pi pi-plus" (click)="dialogNuevaBodega()"></button>
 						<span class="p-input-icon-left mb-2">
 							<i class="pi pi-search"></i>
-							<input pInputText type="text" name="filtro" #filter placeholder="Buscar bodega" class="w-full"/>
+							<input pInputText type="text" name="filtro" [(ngModel)]="search" placeholder="Buscar bodega" class="w-full" (keyup)="filtrarBodega()"/>
 						</span>
 					</div>
 				</ng-template>
@@ -79,8 +79,8 @@
 							</span>
 						</td>
 						<td>
-							<p-button class="m-2" type="button" icon="pi pi-pencil" (click)="editarBodega(bodega)" ></p-button>
-							<p-button class="m-2" severity="danger" type="button" icon="pi pi-trash"></p-button>
+							<p-button class="m-2" type="button" icon="pi pi-pencil" (click)="actualizarBodega(bodega)" ></p-button>
+							<p-button class="m-2" severity="danger" type="button" icon="pi pi-trash" (click)="deleteBodega(bodega)"></p-button>
 						</td>
 					</tr>
 				</ng-template>
@@ -98,5 +98,5 @@
 		</div>
 	</div>
 </div>
-<app-dialogbodega #dialogoBodega (datosBodega)="guardarBodega($event)"></app-dialogbodega>
+<app-dialogbodega #dialogoBodega (bodegaEmitter)="guardarBodega($event)"></app-dialogbodega>
 <p-toast position="top-left"></p-toast>

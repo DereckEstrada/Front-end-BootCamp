@@ -22,7 +22,7 @@ export class BodegaComponent implements OnInit, AfterViewInit {
   operacion: string = '';
   loading: boolean = true;
   messageNotificate: string = '';
-
+  search:string='';
   statuses = [
     { label: 'Inactivo', value: 'unqualified' },
     { label: 'Activo', value: 'qualified' }
@@ -53,6 +53,7 @@ export class BodegaComponent implements OnInit, AfterViewInit {
       next: resp => {
         if (resp["code"] == 200) {
           this.bodegasList = resp['data'];
+          this.loading=false;
         }
       },
       error: err => {
@@ -64,7 +65,7 @@ export class BodegaComponent implements OnInit, AfterViewInit {
   dialogNuevaBodega() {
     this.operacion = 'POST';
     this.messageNotificate = 'Guardado Correctamente';
-    this.dialogoBodega.visibleClient = true;
+    this.dialogoBodega.visible = true;
   }
 
   mantenimientoBodega() {
@@ -80,7 +81,7 @@ export class BodegaComponent implements OnInit, AfterViewInit {
       next: resp => {
         if (resp['code'] == 200) {
           this.messageService.add({ severity: 'success', summary: 'Notificación', detail: this.messageNotificate });
-          this.dialogoBodega.visibleClient = false;
+          this.dialogoBodega.visible = false;
           this.ngAfterViewInit();
         }
       },
@@ -98,7 +99,7 @@ export class BodegaComponent implements OnInit, AfterViewInit {
   actualizarBodega(bodega: BodegaModel) {
     this.operacion = 'PUT';
     this.messageNotificate = 'Actualizado Correctamente';
-    this.dialogoBodega.visibleClient = true;
+    this.dialogoBodega.visible = true;
     this.dialogoBodega.bodega = bodega;
   }
 
@@ -109,11 +110,13 @@ export class BodegaComponent implements OnInit, AfterViewInit {
     this.mantenimientoBodega();
   }
 
-  filtrarBodega(filtro: string) {
+  filtrarBodega() {
+    console.log(this.search)
     let dataQuery: DataQueryModel = {
-      OpcionData: 'descripcion',
-      DataFirstQuery: filtro
+      OpcionData: 'nombre',
+      DataFirstQuery:this.search
     };
+    console.log("assssss"+dataQuery.DataFirstQuery)
     let request: RequestModel = {
       Usuario: 'user',
       Ip: '0.0.0.0',
@@ -124,9 +127,8 @@ export class BodegaComponent implements OnInit, AfterViewInit {
 
     this._serviceBodega.getBodega(request).subscribe({
       next: resp => {
-        if (resp["code"] == 200) {
           this.bodegasList = resp['data'];
-        }
+        
       },
       error: err => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al filtrar bodegas' });

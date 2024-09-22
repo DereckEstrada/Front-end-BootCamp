@@ -12,6 +12,7 @@ import { BodegaRoutingModule } from './bodega-routing.module';
 import { BodegaComponent } from './bodega/bodega.component';
 import { DialogBodegaComponent } from './bodega/dialogbodega/dialogbodega.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { InputGroupModule } from 'primeng/inputgroup';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ToastModule,
     DialogModule,
-    SharedModule
+    SharedModule,
+    InputGroupModule
   ]
 })
 export class BodegaModule { }

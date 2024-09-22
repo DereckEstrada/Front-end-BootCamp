@@ -17,21 +17,21 @@ export class DialogBodegaComponent {
   @Output() bodegaEmitter = new EventEmitter<any>();
   
   bodega: BodegaModel = new BodegaModel();
-  visibleClient: boolean = false;
+  visible: boolean = false;
   
   statuses: any[] = [
     { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '0' }
+    { label: 'Inactivo', value: '2' }
   ];
 
   constructor(private messageService: MessageService) {}
 
   abrir() {
-    this.visibleClient = true;
+    this.visible = true;
   }
 
   cerrar() {
-    this.visibleClient = false;
+    this.visible = false;
   }
 
   enviarBodega(form: NgForm) {
@@ -44,6 +44,7 @@ export class DialogBodegaComponent {
     this.bodegaEmitter.emit(this.bodega);
     
     this.unTouchedControls(form);
+    this.visible=false;
     this.bodega = new BodegaModel();
   }
 
@@ -61,7 +62,7 @@ export class DialogBodegaComponent {
   }
 
   cancelarBodega(form: NgForm) {
-    this.visibleClient = false;
+    this.visible = false;
     Object.values(form.controls).forEach(control => control.markAsUntouched());
     this.bodega = new BodegaModel(); 
   }
