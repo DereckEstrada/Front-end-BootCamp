@@ -105,8 +105,9 @@
 							{{ empresa.ciudadDescripcion }}
 						</td>
 						<td>
-							<span [class]="'customer-badge status-' + empresa.estadoDescripcion">{{empresa.estadoDescripcion}}</span>
-						</td>
+							<span [class]="empresa.estadoId == '1' ? 'customer-badge status-qualified' : 'customer-badge status-unqualified'">
+								{{ empresa.estadoDescripcion }}
+							</span>						</td>
 						<td>
 							{{ empresa.fechaHoraReg | date }}
 						</td>
