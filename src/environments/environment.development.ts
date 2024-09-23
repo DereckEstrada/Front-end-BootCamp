@@ -13,4 +13,7 @@ export const environment = {
     
     pathRestCategoria: '/Catalogo/RestCategoria',
     pathRestCiudad: '/Catalogo/RestCiudad',
+
+    pathDashboard:'/Dashboard/Dashboard',
+    pathDashboardVentasMensuales:'/Dashboard/VentasMensuales',
 };

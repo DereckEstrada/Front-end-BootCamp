@@ -1,14 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { StockService } from 'src/app/services/stock.service';
+import { RequestModel } from 'src/app/models/request.model';
+import { DataQueryModel } from 'src/app/models/dataQuery.model';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+    private router=inject(Router)
+    private _dashboardService=inject(DashboardService);
+    private _stockService=inject(StockService);
 
     items!: MenuItem[];
 
@@ -17,7 +26,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     chartData: any;
 
     chartOptions: any;
-
+    dashboard:any={
+        diferenciaStock: 0,
+        totalDia: 0,
+        totalMovimientos: 0
+    }
     subscription!: Subscription;
 
     constructor(private productService: ProductService, public layoutService: LayoutService) {
@@ -30,8 +43,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.initChart();
-        this.productService.getProductsSmall().then(data => this.products = data);
-
+        let dataQuery:DataQueryModel={
+            OpcionData:'rango_cantidad',
+            DataFirstQuery:'1',
+            DataSecondQuery:'7'
+        }
+        let request:RequestModel={
+            Usuario:'',
+            Operacion:'GET',
+            Modulo:1,
+            Ip:'00',
+            Data:dataQuery
+        }
+        this._stockService.getStock(request).subscribe({
+            next:resp=>this.products=resp['data']
+        });
+        this._dashboardService.getDashboard(request).subscribe({
+            next:resp=>{ 
+                this.dashboard=resp['data']
+            }
+        })
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
@@ -101,5 +132,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+    irStock(){
+        
+        this.router.navigateByUrl('/vmtdev/operaciones/stock')
     }
 }
