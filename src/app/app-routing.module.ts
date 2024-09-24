@@ -15,7 +15,7 @@ import { sesionGuard } from './guards/sesion.guard';
                 children: [
                     { path: 'inventarios', loadChildren: () => import('./modulos/inventarios/inventario.module').then( m => m.InventarioModule ) },
                     { path: 'operaciones', loadChildren: () => import('./modulos/operaciones/operaciones.module').then( m => m.OperacionesModule ) },
-                    { path: 'home', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: 'home', loadComponent: () => import('./demo/components/dashboard/dashboard.component').then(c => c.DashboardComponent ) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
