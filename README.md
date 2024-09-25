@@ -1,27 +1,100 @@
-# Sakai
+## Integrantes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
+- Carvallo Shelton
+- Estrada Dereck
+- Fonseca John
+- Mejia Derek
 
-## Development server
+### Dashboard
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para el Dashboard decidimos crear dos view, uno que tendria las ventas del dia, la cantidad de movimientos que hubo, el total de productos en stock y todos los productos con poco stock, otro view para poder cargar todo lo que es la cantidad de ventas que hubo en un mes.
 
-## Code scaffolding
+<img src="./src/assets/images/dashboardInicio.jpeg" width="600">
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### CRUDs
 
-## Build
+Para los cruds de bodega, empresa, stock, cliente, producto, proveedor se utilizo el form template para validar que la informacion requirada sea ingresada y que estos campos importantes no cuenten con algun valor null, debido a que algunos objetos tienen informacion de otras tablas se uso un modal con el objetivo de que se pueda buscar con mas precision el valor que se quiere.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<img src="./src/assets/images/modalFindCategoria.jpeg" width="600">
 
-## Running unit tests
+<img src="./src/assets/images/modalFindCiudad.jpeg" width="600">
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+A continuacion se mostraran imagenes de todas las pantallas con sus respectivas acciones.
 
-## Running end-to-end tests
+### Bodega
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+#### Crear Bodega
+<img src="./src/assets/images/bodegaCreada.jpeg" width="600"> 
 
-## Further help
+#### Actualizar  Bodega
+<img src="./src/assets/images/bodegaActualizada.jpeg" width="600"> 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### Eliminar  Bodega
+<img src="./src/assets/images/bodegaEliminado.jpeg" width="600"> 
+
+### Producto
+
+#### Crear Producto
+<img src="./src/assets/images/productoCreado.jpeg" width="600"> 
+
+#### Actualizar Producto
+<img src="./src/assets/images/productoActualizado.jpeg" width="600"> 
+
+#### Eliminar Producto
+<img src="./src/assets/images/productoEliminado.jpeg" width="600"> 
+
+### Proveedor
+
+#### Crear Proveedor
+<img src="./src/assets/images/proveedorCreado.jpeg" width="600"> 
+
+#### Actualizar Proveedor
+<img src="./src/assets/images/proveedorActualizado.jpeg" width="600"> 
+
+#### Eliminar Proveedor
+<img src="./src/assets/images/proveedorEliminado.jpeg" width="600"> 
+
+### Empresa
+
+
+#### Actualizar Empresa
+<img src="./src/assets/images/empresaActualizada.jpeg" width="600"> 
+
+#### Eliminar Empresa
+<img src="./src/assets/images/empresaEliminada.jpeg" width="600"> 
+
+#### Invalidar Empresa
+<img src="./src/assets/images/empresaInvalid.jpeg" width="600"> 
+
+### Cliente
+
+#### Crear Cliente
+<img src="./src/assets/images/clienteCreado.jpeg" width="600"> 
+
+#### Actualizar Cliente
+<img src="./src/assets/images/clienteActualizado.jpeg" width="600"> 
+
+#### Eliminar Cliente
+<img src="./src/assets/images/clienteEliminado.jpeg" width="600"> 
+
+#### Invalidar Cliente
+<img src="./src/assets/images/clienteInvalid.jpeg" width="600"> 
+ 
+
+### Stock
+
+Para el registro de stock, fue necesario aplicar un filtro que verificara si un producto ya existía en una bodega específica, asegurándose de que dicha bodega perteneciera a una sucursal, y que esta sucursal formara parte de la misma empresa. De esta manera, se evita que el mismo producto sea registrado más de una vez en las mismas condiciones.
+
+#### Invalidar Stock
+<img src="./src/assets/images/stockInvalid.jpeg" width="600"> 
+
+#### Ingresar nueva cantidad stock
+<img src="./src/assets/images/stockIngreso.jpeg" width="600"> 
+
+
+#### Stock Actualizado
+<img src="./src/assets/images/stockActualizado.jpeg" width="600"> 
+
+### Dashboard Actualizado
+
+<img src="./src/assets/images/dashboardFinal.jpeg" width="600"> 

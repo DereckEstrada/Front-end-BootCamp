@@ -23,6 +23,7 @@ export class StockComponent implements OnInit {
 
   productStock:StockModel[]=[];
   loading: boolean = false;
+  message:string='';
 
 
   search: string = '';
@@ -33,9 +34,11 @@ export class StockComponent implements OnInit {
     })
   }
   openRegistrarStock(){    
+    this.message="Stock registrado correctamente"
     this.dialogRegistro.visible=true;
   }
   openDialStock(stock:StockModel){
+    this.message="Stock actualizado correctamente";
      this.dialogStock.stock=stock;
       this.dialogStock.visible=true;
   }
@@ -46,7 +49,7 @@ export class StockComponent implements OnInit {
       next:resp=>{
         if(resp['code']==200){
           this.ngOnInit();
-          this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:"Stock registrado correctamente"});      
+          this.messageService.add({severity:'success', summary:'Notificación VMTDev Bootcamp', detail:this.message});      
         }
       }
     })
